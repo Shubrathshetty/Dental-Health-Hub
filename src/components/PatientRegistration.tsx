@@ -38,13 +38,60 @@ const PatientRegistration = ({ onBack, onSuccess }: PatientRegistrationProps) =>
     emergencyContactPhone: "",
   });
 
+  const calculateAge = (dateOfBirth: string) => {
+    const today = new Date();
+    const birthDate = new Date(dateOfBirth);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
+  };
+
   const handleInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => {
+      const newData = { ...prev, [name]: value };
+      if (name === 'dateOfBirth' && value) {
+        newData.age = calculateAge(value).toString();
+      }
+      return newData;
+    });
+  };
+
+  const handleNameInput = (e: React.FormEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement;
+    target.value = target.value.replace(/[^a-zA-Z\s]/g, '');
+  };
+
+  const handlePhoneInput = (e: React.FormEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement;
+    target.value = target.value.replace(/\D/g, '').slice(0, 10);
+  };
+
+  const handleAadharInput = (e: React.FormEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement;
+    target.value = target.value.replace(/\D/g, '').slice(0, 12);
+  };
+
+  const handleRationCardInput = (e: React.FormEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement;
+    target.value = target.value.replace(/[^a-zA-Z0-9]/g, '').slice(0, 15);
+  };
+
+  const handleEmergencyContactNameInput = (e: React.FormEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement;
+    target.value = target.value.replace(/[^a-zA-Z\s]/g, '');
+  };
+
+  const handleEmergencyContactPhoneInput = (e: React.FormEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement;
+    target.value = target.value.replace(/\D/g, '').slice(0, 10);
   };
 
   // ✅ Email validation helper
@@ -80,6 +127,46 @@ const PatientRegistration = ({ onBack, onSuccess }: PatientRegistrationProps) =>
       toast({
         title: "Invalid Email",
         description: "Please enter a valid email ID",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // ✅ Phone number validation (exactly 10 digits)
+    if (formData.phone.length !== 10) {
+      toast({
+        title: "Invalid Phone Number",
+        description: "Phone number must be exactly 10 digits",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // ✅ Aadhar number validation (exactly 12 digits)
+    if (formData.aadharNumber.length !== 12) {
+      toast({
+        title: "Invalid Aadhar Number",
+        description: "Aadhar number must be exactly 12 digits",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // ✅ Ration card number validation (10-15 alphanumeric characters)
+    if (formData.rationCardNumber && (formData.rationCardNumber.length < 10 || formData.rationCardNumber.length > 15 || !/^[a-zA-Z0-9]+$/.test(formData.rationCardNumber))) {
+      toast({
+        title: "Invalid Ration Card Number",
+        description: "Ration card number must be 10-15 alphanumeric characters",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // ✅ Emergency contact phone validation (exactly 10 digits)
+    if (formData.emergencyContactPhone.length !== 10) {
+      toast({
+        title: "Invalid Emergency Contact Phone",
+        description: "Emergency contact phone must be exactly 10 digits",
         variant: "destructive",
       });
       return;
@@ -124,7 +211,7 @@ const PatientRegistration = ({ onBack, onSuccess }: PatientRegistrationProps) =>
       <div className="min-h-screen bg-white flex items-center justify-center p-4">
         <div className="w-full max-w-md animate-scale-in">
           <div className="bg-sky-600 rounded-2xl p-8 shadow-lg border border-sky-300 text-center">
-            <div className="w-20 h-20 rounded-full bg-blue-800 flex items-center justify-center mx-auto mb-6">
+            <div className="w-20 h-20 rounded-full bg-sky-500 flex items-center justify-center mx-auto mb-6">
               <CheckCircle className="w-10 h-10 text-white" />
             </div>
 
@@ -136,8 +223,8 @@ const PatientRegistration = ({ onBack, onSuccess }: PatientRegistrationProps) =>
             </p>
 
             <div className="space-y-4 mb-8">
-              <div className="bg-blue-800 rounded-xl p-4">
-                <Label className="text-xs text-blue-200 uppercase tracking-wide">
+              <div className="bg-sky-500 rounded-xl p-4">
+                <Label className="text-xs text-sky-200 uppercase tracking-wide">
                   Patient ID
                 </Label>
                 <div className="flex items-center justify-between mt-1">
@@ -150,7 +237,7 @@ const PatientRegistration = ({ onBack, onSuccess }: PatientRegistrationProps) =>
                     onClick={() =>
                       copyToClipboard(credentials.patientId, "Patient ID")
                     }
-                    className="text-white hover:bg-blue-700"
+                    className="text-white hover:bg-sky-400"
                   >
                     <Copy className="w-4 h-4" />
                   </Button>
@@ -171,7 +258,7 @@ const PatientRegistration = ({ onBack, onSuccess }: PatientRegistrationProps) =>
                     onClick={() =>
                       copyToClipboard(credentials.password, "Password")
                     }
-                    className="text-white hover:bg-blue-700"
+                    className="text-white hover:bg-sky-400"
                   >
                     <Copy className="w-4 h-4" />
                   </Button>
@@ -183,7 +270,7 @@ const PatientRegistration = ({ onBack, onSuccess }: PatientRegistrationProps) =>
               onClick={onSuccess}
               variant="hero"
               size="lg"
-              className="w-full bg-white text-blue-900 hover:bg-blue-50"
+              className="w-full bg-white text-sky-900 hover:bg-sky-50"
             >
               Continue to Login
             </Button>
@@ -226,6 +313,7 @@ const PatientRegistration = ({ onBack, onSuccess }: PatientRegistrationProps) =>
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
+                  onInput={handleNameInput}
                   className="mt-1 bg-white text-black border-sky-300"
                   required
                 />
@@ -278,6 +366,7 @@ const PatientRegistration = ({ onBack, onSuccess }: PatientRegistrationProps) =>
                   value={formData.dateOfBirth}
                   onChange={handleInputChange}
                   className="mt-1 bg-white text-black border-sky-300"
+                  max={new Date().toISOString().split('T')[0]}
                 />
               </div>
 
@@ -314,6 +403,7 @@ const PatientRegistration = ({ onBack, onSuccess }: PatientRegistrationProps) =>
                   type="tel"
                   value={formData.phone}
                   onChange={handleInputChange}
+                  onInput={handlePhoneInput}
                   className="mt-1 bg-white text-black border-sky-300"
                   required
                 />
@@ -355,7 +445,8 @@ const PatientRegistration = ({ onBack, onSuccess }: PatientRegistrationProps) =>
                   name="aadharNumber"
                   value={formData.aadharNumber}
                   onChange={handleInputChange}
-                  className="mt-1 bg-white text-black border-blue-300"
+                  onInput={handleAadharInput}
+                  className="mt-1 bg-white text-black border-sky-300"
                   maxLength={12}
                 />
               </div>
@@ -369,6 +460,7 @@ const PatientRegistration = ({ onBack, onSuccess }: PatientRegistrationProps) =>
                   name="rationCardNumber"
                   value={formData.rationCardNumber}
                   onChange={handleInputChange}
+                  onInput={handleRationCardInput}
                   className="mt-1 bg-white text-black border-sky-300"
                 />
               </div>
@@ -382,7 +474,8 @@ const PatientRegistration = ({ onBack, onSuccess }: PatientRegistrationProps) =>
                   name="emergencyContact"
                   value={formData.emergencyContact}
                   onChange={handleInputChange}
-                  className="mt-1 bg-white text-black border-blue-300"
+                  onInput={handleEmergencyContactNameInput}
+                  className="mt-1 bg-white text-black border-sky-300"
                 />
               </div>
 
@@ -396,6 +489,7 @@ const PatientRegistration = ({ onBack, onSuccess }: PatientRegistrationProps) =>
                   type="tel"
                   value={formData.emergencyContactPhone}
                   onChange={handleInputChange}
+                  onInput={handleEmergencyContactPhoneInput}
                   className="mt-1 bg-white text-black border-sky-300"
                 />
               </div>
@@ -405,7 +499,7 @@ const PatientRegistration = ({ onBack, onSuccess }: PatientRegistrationProps) =>
               type="submit"
               variant="hero"
               size="lg"
-              className="w-full bg-white text-blue-900 hover:bg-blue-50"
+              className="w-full bg-sky text-white-900 hover:bg-white-50"
             >
               Register as Patient
             </Button>

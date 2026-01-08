@@ -9,14 +9,14 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-soft hover:shadow-card active:scale-[0.98]",
-        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-soft",
-        outline: "border-2 border-primary bg-transparent text-primary hover:bg-primary hover:text-primary-foreground",
-        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-soft",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
-        hero: "gradient-primary text-primary-foreground shadow-elevated hover:shadow-card hover:scale-[1.02] active:scale-[0.98] font-semibold",
-        success: "bg-success text-success-foreground hover:bg-success/90 shadow-soft",
+        default: "bg-sky-500 text-white hover:bg-sky-600 shadow-soft hover:shadow-card active:scale-[0.98]",
+        destructive: "bg-sky-500 text-white hover:bg-sky-600 shadow-soft",
+        outline: "bg-sky-500 text-white hover:bg-sky-600 border-2 border-sky-500",
+        secondary: "bg-sky-500 text-white hover:bg-sky-600 shadow-soft",
+        ghost: "bg-sky-500 text-white hover:bg-sky-600",
+        link: "bg-sky-500 text-white hover:bg-sky-600 underline-offset-4 hover:underline",
+        hero: "bg-sky-500 text-white shadow-elevated hover:shadow-card hover:scale-[1.02] active:scale-[0.98] font-semibold",
+        success: "bg-sky-500 text-white hover:bg-sky-600 shadow-soft",
       },
       size: {
         default: "h-11 px-5 py-2",

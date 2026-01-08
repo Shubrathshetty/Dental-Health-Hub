@@ -205,16 +205,16 @@ const RoleSelection = ({ onSelectRole }: RoleSelectionProps) => {
         {/* About Dental Care Accordion */}
         <div className="mt-16 max-w-4xl mx-auto animate-slide-up animation-delay-1000">
           <h2 className="text-4xl font-display font-bold text-black text-center mb-10">
-            About Dental Care
+            About DentCare
           </h2>
           <div className="bg-white backdrop-blur-sm rounded-3xl p-8 shadow-card border border-gray-300">
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="item-1" className="border-gray-300">
                 <AccordionTrigger className="text-left text-lg font-medium text-black hover:text-black transition-colors duration-300">
-                  What is Dental Care?
+                  What is DentCare?
                 </AccordionTrigger>
                 <AccordionContent className="text-black leading-relaxed">
-                  Dental care encompasses a range of services aimed at maintaining oral health, preventing diseases, and treating conditions related to teeth, gums, and mouth. Regular check-ups, cleanings, and treatments help ensure a healthy smile.
+                  DentCare encompasses a comprehensive range of services focused on maintaining optimal oral health, preventing dental diseases, and diagnosing as well as treating conditions affecting the teeth, gums, and overall oral cavity. These services include routine dental check-ups, professional cleanings, preventive care, and timely treatments that help identify potential issues at an early stage. By emphasizing both preventive and corrective care, DentCare plays a vital role in reducing the risk of cavities, gum disease, and other oral health problems. Regular visits not only help preserve strong teeth and healthy gums but also contribute to overall well-being, confidence, and a long-lasting, healthy smile.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-2" className="border-gray-300">
@@ -222,7 +222,7 @@ const RoleSelection = ({ onSelectRole }: RoleSelectionProps) => {
                   Importance of Regular Dental Visits
                 </AccordionTrigger>
                 <AccordionContent className="text-black leading-relaxed">
-                  Regular dental visits are crucial for early detection of issues like cavities, gum disease, and oral cancer. They also include preventive measures such as cleanings and fluoride treatments to keep your teeth strong.
+                  Regular dental visits play a crucial role in maintaining overall oral health by enabling the early detection of common issues such as cavities, gum disease, and even oral cancer before they become serious. These visits also focus on preventive care, including professional cleanings that remove plaque and tartar buildup, as well as fluoride treatments that help strengthen tooth enamel. By addressing potential problems early and reinforcing preventive measures, regular dental check-ups help preserve healthy teeth and gums, reduce the need for extensive treatments, and support long-term oral well-being.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-3" className="border-gray-300">
@@ -230,7 +230,7 @@ const RoleSelection = ({ onSelectRole }: RoleSelectionProps) => {
                   Our Services
                 </AccordionTrigger>
                 <AccordionContent className="text-black leading-relaxed">
-                  We offer comprehensive services including routine check-ups, cosmetic dentistry, orthodontics, and emergency care. Our team uses the latest technology to provide the best possible outcomes for our patients.
+                  We offer a wide range of comprehensive dental services designed to meet the diverse needs of our patients, including routine check-ups that support preventive care, cosmetic dentistry to enhance the appearance of your smile, orthodontic treatments to correct alignment issues, and prompt emergency care to address urgent dental concerns. Our experienced team is committed to delivering high-quality care by utilizing the latest dental technologies and advanced treatment techniques. This approach allows us to ensure precise diagnoses, effective treatments, and the best possible outcomes, all while prioritizing patient comfort, safety, and long-term oral health.
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
@@ -248,7 +248,7 @@ const RoleSelection = ({ onSelectRole }: RoleSelectionProps) => {
           <div className="flex justify-center items-center space-x-8 mb-8">
             <div className="flex items-center space-x-3 bg-white backdrop-blur-sm rounded-2xl p-4 shadow-card hover:shadow-elevated transition-all duration-300 hover:scale-105 animate-float-gentle">
               <Phone className="w-8 h-8 text-black animate-pulse" />
-              <span className="text-black font-medium">Call: 9148777807</span>
+              <span className="text-black font-medium">Call: +123 456 7890</span>
             </div>
             <div className="flex items-center space-x-3 bg-white backdrop-blur-sm rounded-2xl p-4 shadow-card hover:shadow-elevated transition-all duration-300 hover:scale-105 animate-float-gentle">
               <span className="text-black font-medium">Email: admin@dentalcare.com</span>
