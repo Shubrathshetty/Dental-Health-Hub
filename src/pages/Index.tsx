@@ -1,14 +1,16 @@
 import { useState } from "react";
 import RoleSelection from "@/components/RoleSelection";
+import AdminLogin from "@/components/AdminLogin";
+import AdminDashboard from "@/components/AdminDashboard";
 import PatientAuthChoice from "@/components/PatientAuthChoice";
 import PatientRegistration from "@/components/PatientRegistration";
 import PatientLogin from "@/components/PatientLogin";
 import DentalQuestionnaire from "@/components/DentalQuestionnaire";
-import AdminDashboard from "@/components/AdminDashboard";
 import { Patient } from "@/lib/patientStore";
 
-type AppState = 
+type AppState =
   | 'role-selection'
+  | 'admin-login'
   | 'admin-dashboard'
   | 'patient-auth-choice'
   | 'patient-register'
@@ -21,7 +23,7 @@ const Index = () => {
 
   const handleRoleSelect = (role: 'admin' | 'patient') => {
     if (role === 'admin') {
-      setAppState('admin-dashboard');
+      setAppState('admin-login');
     } else {
       setAppState('patient-auth-choice');
     }
@@ -45,10 +47,22 @@ const Index = () => {
     // Stay logged in, allow new assessment
   };
 
+  const handleAdminLoginSuccess = (adminId: string) => {
+    setAppState('admin-dashboard');
+  };
+
   switch (appState) {
     case 'role-selection':
       return <RoleSelection onSelectRole={handleRoleSelect} />;
-    
+
+    case 'admin-login':
+      return (
+        <AdminLogin
+          onBack={() => setAppState('role-selection')}
+          onLogin={handleAdminLoginSuccess}
+        />
+      );
+
     case 'admin-dashboard':
       return <AdminDashboard onBack={() => setAppState('role-selection')} />;
     

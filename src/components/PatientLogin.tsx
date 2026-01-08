@@ -53,68 +53,68 @@ const PatientLogin = ({ onBack, onLoginSuccess }: PatientLoginProps) => {
   };
 
   return (
-    <div className="min-h-screen gradient-hero flex items-center justify-center p-4">
+    <div className="min-h-screen bg-white flex items-center justify-center p-4">
       <div className="w-full max-w-md animate-slide-up">
         <Button
           variant="ghost"
           onClick={onBack}
-          className="mb-6 text-muted-foreground hover:text-foreground"
+          className="mb-6 text-gray-600 hover:text-gray-900"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back
         </Button>
 
-        <div className="bg-card rounded-2xl p-8 shadow-card border border-border">
+        <div className="bg-sky-600 rounded-2xl p-8 shadow-lg border border-sky-300">
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-accent mb-4">
-              <LogIn className="w-8 h-8 text-accent-foreground" />
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-sky-500 mb-4">
+              <LogIn className="w-8 h-8 text-white" />
             </div>
-            <h1 className="text-3xl font-display font-bold text-foreground mb-2">
+            <h1 className="text-3xl font-display font-bold text-white mb-2">
               Patient Login
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-sky-100">
               Enter your credentials to continue
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <Label htmlFor="patientId" className="text-foreground">Patient ID</Label>
+              <Label htmlFor="patientId" className="text-white">Patient ID</Label>
               <Input
                 id="patientId"
                 value={patientId}
                 onChange={(e) => setPatientId(e.target.value)}
                 placeholder="e.g., DPT123456789"
-                className="mt-1"
+                className="mt-1 bg-white text-gray-900 border-sky-300"
                 autoComplete="username"
               />
             </div>
 
             <div>
-              <Label htmlFor="password" className="text-foreground">Password</Label>
+              <Label htmlFor="password" className="text-white">Password</Label>
               <Input
                 id="password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
-                className="mt-1"
+                className="mt-1 bg-white text-gray-900 border-sky-300"
                 autoComplete="current-password"
               />
             </div>
 
-            <Button 
-              type="submit" 
-              variant="hero" 
-              size="lg" 
-              className="w-full"
+            <Button
+              type="submit"
+              variant="hero"
+              size="lg"
+              className="w-full bg-white text-sky-600 hover:bg-sky-50"
               disabled={isLoading}
             >
               {isLoading ? "Logging in..." : "Login"}
             </Button>
           </form>
 
-          <p className="text-center text-sm text-muted-foreground mt-6">
+          <p className="text-center text-sm text-sky-200 mt-6">
             Don't have an account? Go back and register as a new patient.
           </p>
         </div>

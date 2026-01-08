@@ -88,10 +88,10 @@ const DentalQuestionnaire = ({ patient, onComplete, onLogout }: DentalQuestionna
   const handleDownload = () => {
     const yesCount = Object.values(answers).filter(Boolean).length;
     const date = new Date().toLocaleDateString();
-    
+
     const content = `
-DENTCARE CLINIC - DENTAL HEALTH ASSESSMENT
-==========================================
+                                      DENTALCARE CLINIC - DENTAL HEALTH ASSESSMENT
+============================================================================================================================
 
 Date: ${date}
 
@@ -113,7 +113,7 @@ Issues Reported: ${yesCount} of ${questions.length}
 Consultation Requested: ${consultationNeeded ? 'Yes' : 'No'}
 
 ==========================================
-Thank you for using DentCare Clinic services.
+Thank you for using DentalCare Clinic services.
     `.trim();
 
     const blob = new Blob([content], { type: 'text/plain' });
@@ -132,50 +132,52 @@ Thank you for using DentCare Clinic services.
     });
   };
 
+
+
   if (showSummary) {
     const yesCount = Object.values(answers).filter(Boolean).length;
-    
+
     return (
-      <div className="min-h-screen gradient-hero flex items-center justify-center p-4">
+      <div className="min-h-screen bg-white flex items-center justify-center p-4">
         <div className="w-full max-w-lg animate-scale-in">
-          <div ref={summaryRef} className="bg-card rounded-2xl p-8 shadow-elevated border border-border print:shadow-none print:border-none">
+          <div ref={summaryRef} className="bg-blue-900 rounded-2xl p-8 shadow-lg border border-blue-300 print:shadow-none print:border-none">
             <div className="text-center mb-8">
-              <div className="w-20 h-20 rounded-full bg-success/10 flex items-center justify-center mx-auto mb-6 print:bg-transparent">
-                <CheckCircle className="w-10 h-10 text-success" />
+              <div className="w-20 h-20 rounded-full bg-blue-800 flex items-center justify-center mx-auto mb-6 print:bg-transparent">
+                <CheckCircle className="w-10 h-10 text-white" />
               </div>
-              <h1 className="text-2xl font-display font-bold text-foreground mb-2">
+              <h1 className="text-2xl font-display font-bold text-white mb-2">
                 Assessment Complete!
               </h1>
-              <p className="text-muted-foreground">
+              <p className="text-blue-100">
                 Thank you for completing your dental health assessment
               </p>
             </div>
 
-            <div className="bg-secondary rounded-xl p-6 mb-4 print:bg-transparent print:border print:border-border">
-              <h3 className="font-semibold text-foreground mb-4">Patient Details</h3>
+            <div className="bg-blue-800 rounded-xl p-6 mb-4 print:bg-transparent print:border print:border-border">
+              <h3 className="font-semibold text-white mb-4">Patient Details</h3>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Name</span>
-                  <span className="font-medium text-foreground">{patient.name}</span>
+                  <span className="text-blue-200">Name</span>
+                  <span className="font-medium text-white">{patient.name}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Patient ID</span>
-                  <span className="font-mono text-foreground">{patient.patientId}</span>
+                  <span className="text-blue-200">Patient ID</span>
+                  <span className="font-mono text-white">{patient.patientId}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Date</span>
-                  <span className="text-foreground">{new Date().toLocaleDateString()}</span>
+                  <span className="text-blue-200">Date</span>
+                  <span className="text-white">{new Date().toLocaleDateString()}</span>
                 </div>
               </div>
             </div>
 
-            <div className="bg-secondary rounded-xl p-6 mb-4 print:bg-transparent print:border print:border-border">
-              <h3 className="font-semibold text-foreground mb-4">Assessment Responses</h3>
+            <div className="bg-blue-800 rounded-xl p-6 mb-4 print:bg-transparent print:border print:border-border">
+              <h3 className="font-semibold text-white mb-4">Assessment Responses</h3>
               <div className="space-y-2 text-sm">
                 {questions.map(q => (
                   <div key={q.id} className="flex justify-between items-center">
-                    <span className="text-muted-foreground flex-1 pr-4">{q.question}</span>
-                    <span className={`font-medium ${answers[q.id] ? 'text-destructive' : 'text-success'}`}>
+                    <span className="text-blue-200 flex-1 pr-4">{q.question}</span>
+                    <span className={`font-medium ${answers[q.id] ? 'text-red-300' : 'text-green-300'}`}>
                       {answers[q.id] ? 'Yes' : 'No'}
                     </span>
                   </div>
@@ -183,16 +185,16 @@ Thank you for using DentCare Clinic services.
               </div>
             </div>
 
-            <div className="bg-secondary rounded-xl p-6 mb-6 print:bg-transparent print:border print:border-border">
-              <h3 className="font-semibold text-foreground mb-4">Summary</h3>
+            <div className="bg-blue-800 rounded-xl p-6 mb-6 print:bg-transparent print:border print:border-border">
+              <h3 className="font-semibold text-white mb-4">Summary</h3>
               <div className="space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Issues Reported</span>
-                  <span className="font-medium text-foreground">{yesCount} of {questions.length}</span>
+                  <span className="text-blue-200">Issues Reported</span>
+                  <span className="font-medium text-white">{yesCount} of {questions.length}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Consultation Requested</span>
-                  <span className={`font-medium ${consultationNeeded ? 'text-primary' : 'text-muted-foreground'}`}>
+                  <span className="text-blue-200">Consultation Requested</span>
+                  <span className={`font-medium ${consultationNeeded ? 'text-blue-300' : 'text-blue-200'}`}>
                     {consultationNeeded ? 'Yes' : 'No'}
                   </span>
                 </div>
@@ -200,21 +202,21 @@ Thank you for using DentCare Clinic services.
             </div>
 
             <div className="flex gap-3 mb-4 print:hidden">
-              <Button onClick={handlePrint} variant="outline" size="lg" className="flex-1">
+              <Button onClick={handlePrint} variant="outline" size="lg" className="flex-1 bg-white text-blue-900 hover:bg-blue-50">
                 <Printer className="w-4 h-4 mr-2" />
                 Print
               </Button>
-              <Button onClick={handleDownload} variant="outline" size="lg" className="flex-1">
+              <Button onClick={handleDownload} variant="outline" size="lg" className="flex-1 bg-white text-blue-900 hover:bg-blue-50">
                 <Download className="w-4 h-4 mr-2" />
                 Download
               </Button>
             </div>
 
             <div className="space-y-3 print:hidden">
-              <Button onClick={onComplete} variant="hero" size="lg" className="w-full">
+              {/*<Button onClick={onComplete} variant="hero" size="lg" className="w-full">
                 Take New Assessment
-              </Button>
-              <Button onClick={onLogout} variant="outline" size="lg" className="w-full">
+              </Button>*/}
+              <Button onClick={onLogout} variant="outline" size="lg" className="w-full bg-white text-blue-900 hover:bg-blue-50">
                 <LogOut className="w-4 h-4 mr-2" />
                 Logout
               </Button>
@@ -227,18 +229,18 @@ Thank you for using DentCare Clinic services.
 
   if (showConsultation) {
     return (
-      <div className="min-h-screen gradient-hero flex items-center justify-center p-4">
+      <div className="min-h-screen bg-white flex items-center justify-center p-4">
         <div className="w-full max-w-lg animate-slide-up">
-          <div className="bg-card rounded-2xl p-8 shadow-card border border-border">
+          <div className="bg-blue-900 rounded-2xl p-8 shadow-lg border border-blue-300">
             <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-accent mb-6">
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-blue-800 mb-6">
                 <span className="text-4xl">👨‍⚕️</span>
               </div>
-              <h2 className="text-2xl font-display font-bold text-foreground mb-3">
+              <h2 className="text-2xl font-display font-bold text-white mb-3">
                 Doctor Consultation
               </h2>
-              <p className="text-muted-foreground text-lg">
-                Based on your responses, would you like to schedule a consultation with our dentist?
+              <p className="text-blue-100 text-lg">
+                Based on your responses, would you like to schedule a consultation with our Dentist?
               </p>
             </div>
 
@@ -247,7 +249,7 @@ Thank you for using DentCare Clinic services.
                 onClick={() => handleConsultation(true)}
                 variant="hero"
                 size="xl"
-                className="flex flex-col h-auto py-6"
+                className="flex flex-col h-auto py-6 bg-white text-blue-900 hover:bg-blue-50"
               >
                 <CheckCircle className="w-8 h-8 mb-2" />
                 Yes
@@ -256,7 +258,7 @@ Thank you for using DentCare Clinic services.
                 onClick={() => handleConsultation(false)}
                 variant="secondary"
                 size="xl"
-                className="flex flex-col h-auto py-6"
+                className="flex flex-col h-auto py-6 bg-blue-800 text-white hover:bg-blue-700 border-blue-300"
               >
                 <XCircle className="w-8 h-8 mb-2" />
                 No
@@ -272,107 +274,123 @@ Thank you for using DentCare Clinic services.
   const progress = (answeredCount / questions.length) * 100;
 
   return (
-    <div className="min-h-screen gradient-hero">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="bg-card/80 backdrop-blur-sm border-b border-border sticky top-0 z-10">
-        <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-              <User className="w-5 h-5 text-primary" />
+      <header className="bg-blue-900 border-b border-blue-300 sticky top-0 z-10 shadow-lg">
+        <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-blue-800 flex items-center justify-center shadow-lg">
+              <User className="w-6 h-6 text-white" />
             </div>
             <div>
-              <p className="font-medium text-foreground">{patient.name}</p>
-              <p className="text-xs text-muted-foreground">{patient.patientId}</p>
+              <p className="font-semibold text-white text-lg">{patient.name}</p>
+              <p className="text-sm text-blue-200 font-mono">{patient.patientId}</p>
             </div>
           </div>
-          <Button variant="ghost" size="sm" onClick={onLogout}>
-            <LogOut className="w-4 h-4 mr-2" />
-            Logout
-          </Button>
+          <div className="flex items-center gap-3">
+            <div className="text-right">
+              <p className="text-sm text-blue-200">Assessment Progress</p>
+              <p className="font-semibold text-white">{Math.round(progress)}% Complete</p>
+            </div>
+            <Button variant="outline" size="sm" onClick={onLogout} className="bg-white text-blue-900 hover:bg-blue-50 border-blue-300">
+              <LogOut className="w-4 h-4 mr-2" />
+              Logout
+            </Button>
+          </div>
         </div>
       </header>
 
-      {/* Progress bar */}
-      <div className="max-w-2xl mx-auto px-4 pt-8">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-sm text-muted-foreground">
-            {answeredCount} of {questions.length} answered
-          </span>
-          <span className="text-sm font-medium text-primary">
-            {Math.round(progress)}% complete
-          </span>
-        </div>
-        <div className="h-2 bg-secondary rounded-full overflow-hidden">
-          <div 
-            className="h-full gradient-primary transition-all duration-500 ease-out rounded-full"
-            style={{ width: `${progress}%` }}
-          />
+      {/* Progress Section */}
+      <div className="max-w-4xl mx-auto px-4 pt-8 pb-4">
+        <div className="bg-blue-900 rounded-2xl p-6 shadow-lg border border-blue-300">
+          <div className="flex items-center justify-between mb-4">
+            <h1 className="text-2xl font-display font-bold text-white">
+              Dental Health Assessment
+            </h1>
+            <div className="text-right">
+              <p className="text-sm text-blue-200">Questions Answered</p>
+              <p className="text-2xl font-bold text-white">{answeredCount}/{questions.length}</p>
+            </div>
+          </div>
+          <div className="h-3 bg-blue-800 rounded-full overflow-hidden shadow-inner">
+            <div
+              className="h-full bg-gradient-to-r from-blue-500 to-blue-600 transition-all duration-700 ease-out rounded-full shadow-lg"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+          <p className="text-sm text-blue-200 mt-2 text-center">
+            Please answer all questions to proceed with your assessment
+          </p>
         </div>
       </div>
 
       {/* Questions List */}
-      <div className="max-w-2xl mx-auto p-4 mt-6">
-        <div className="bg-card rounded-2xl shadow-card border border-border overflow-hidden">
-          <div className="p-6 border-b border-border">
-            <h2 className="text-xl font-display font-semibold text-foreground">
-              Dental Health Assessment
-            </h2>
-            <p className="text-muted-foreground mt-1">
-              Please answer the following questions about your dental health
-            </p>
-          </div>
+      <div className="max-w-4xl mx-auto p-4 pb-8">
+        <div className="space-y-4">
+          {questions.map((question, index) => (
+            <div key={question.id} className="bg-blue-900 rounded-2xl shadow-lg border border-blue-300 overflow-hidden hover:shadow-xl transition-all duration-300">
+              <div className="p-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-14 h-14 rounded-xl bg-blue-800 flex items-center justify-center flex-shrink-0 shadow-lg">
+                    <span className="text-3xl">{question.icon}</span>
+                  </div>
 
-          <div className="divide-y divide-border">
-            {questions.map((question, index) => (
-              <div key={question.id} className="p-4 md:p-6 flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center flex-shrink-0">
-                  <span className="text-2xl">{question.icon}</span>
-                </div>
-                
-                <div className="flex-1 min-w-0">
-                  <p className="text-foreground font-medium">
-                    {index + 1}. {question.question}
-                  </p>
-                </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-blue-700 text-white font-bold text-sm shadow-lg">
+                        {index + 1}
+                      </span>
+                      <h3 className="text-lg font-semibold text-white leading-tight">
+                        {question.question}
+                      </h3>
+                    </div>
 
-                <div className="flex gap-2 flex-shrink-0">
-                  <button
-                    onClick={() => handleAnswer(question.id, true)}
-                    className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 ${
-                      answers[question.id] === true
-                        ? 'bg-destructive text-destructive-foreground shadow-soft'
-                        : 'bg-secondary text-secondary-foreground hover:bg-destructive/10 hover:text-destructive'
-                    }`}
-                  >
-                    Yes
-                  </button>
-                  <button
-                    onClick={() => handleAnswer(question.id, false)}
-                    className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 ${
-                      answers[question.id] === false
-                        ? 'bg-success text-success-foreground shadow-soft'
-                        : 'bg-secondary text-secondary-foreground hover:bg-success/10 hover:text-success'
-                    }`}
-                  >
-                    No
-                  </button>
+                    <div className="flex gap-3 ml-11">
+                      <button
+                        onClick={() => handleAnswer(question.id, true)}
+                        className={`px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 shadow-lg hover:shadow-xl ${
+                          answers[question.id] === true
+                            ? 'bg-red-500 text-white shadow-red-200'
+                            : 'bg-blue-800 text-white hover:bg-red-500 hover:text-white border border-blue-300'
+                        }`}
+                      >
+                        Yes
+                      </button>
+                      <button
+                        onClick={() => handleAnswer(question.id, false)}
+                        className={`px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 shadow-lg hover:shadow-xl ${
+                          answers[question.id] === false
+                            ? 'bg-green-500 text-white shadow-green-200'
+                            : 'bg-blue-800 text-white hover:bg-green-500 hover:text-white border border-blue-300'
+                        }`}
+                      >
+                        No
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
+        </div>
 
-          <div className="p-6 bg-secondary/50">
-            <Button 
-              onClick={handleSubmitAnswers} 
-              variant="hero" 
-              size="lg" 
-              className="w-full"
-              disabled={!allAnswered}
-            >
-              Continue
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </Button>
-          </div>
+        {/* Continue Button */}
+        <div className="mt-8 bg-blue-900 rounded-2xl p-6 shadow-lg border border-blue-300">
+          <Button
+            onClick={handleSubmitAnswers}
+            variant="hero"
+            size="xl"
+            className="w-full bg-white text-blue-900 hover:bg-blue-50 shadow-lg hover:shadow-xl transition-all duration-300"
+            disabled={!allAnswered}
+          >
+            <span className="text-lg font-semibold">Complete Assessment</span>
+            <ArrowRight className="w-6 h-6 ml-3" />
+          </Button>
+          {!allAnswered && (
+            <p className="text-sm text-blue-200 text-center mt-3">
+              Please answer all questions to continue
+            </p>
+          )}
         </div>
       </div>
     </div>
