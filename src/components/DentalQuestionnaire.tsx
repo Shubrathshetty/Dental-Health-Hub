@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, XCircle, User, LogOut, ArrowRight, Printer, Download } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
@@ -37,7 +37,20 @@ const DentalQuestionnaire = ({ patient, onComplete, onLogout }: DentalQuestionna
   const [showConsultation, setShowConsultation] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
   const [consultationNeeded, setConsultationNeeded] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const summaryRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    console.log('showSummary state changed:', showSummary);
+  }, [showSummary]);
+
+  useEffect(() => {
+    console.log('showConsultation state changed:', showConsultation);
+  }, [showConsultation]);
+
+  useEffect(() => {
+    console.log('Component re-rendered. showSummary:', showSummary, 'showConsultation:', showConsultation);
+  });
 
   const handleAnswer = (questionId: string, answer: boolean) => {
     setAnswers(prev => ({ ...prev, [questionId]: answer }));
@@ -57,26 +70,44 @@ const DentalQuestionnaire = ({ patient, onComplete, onLogout }: DentalQuestionna
     setShowConsultation(true);
   };
 
-  const handleConsultation = (needed: boolean) => {
-    setConsultationNeeded(needed);
-    const assessment: DentalAssessment = {
-      patientId: patient.patientId,
-      toothPain: answers.toothPain || false,
-      foodLodgement: answers.foodLodgement || false,
-      toothDiscoloration: answers.toothDiscoloration || false,
-      bleedingGums: answers.bleedingGums || false,
-      badBreath: answers.badBreath || false,
-      nonHealingUlcer: answers.nonHealingUlcer || false,
-      malalignedTooth: answers.malalignedTooth || false,
-      consultationNeeded: needed,
-      assessmentDate: new Date().toISOString(),
-    };
-    saveAssessment(assessment);
-    setShowSummary(true);
-    toast({
-      title: "Assessment Complete",
-      description: needed ? "Your consultation request has been recorded." : "Thank you for completing the assessment.",
-    });
+  const handleConsultation = async (needed: boolean) => {
+    if (isSubmitting) return; // Prevent multiple clicks
+
+    try {
+      setIsSubmitting(true);
+      console.log('Consultation choice:', needed);
+      setConsultationNeeded(needed);
+      const assessment: DentalAssessment = {
+        patientId: patient.patientId,
+        toothPain: answers.toothPain || false,
+        foodLodgement: answers.foodLodgement || false,
+        toothDiscoloration: answers.toothDiscoloration || false,
+        bleedingGums: answers.bleedingGums || false,
+        badBreath: answers.badBreath || false,
+        nonHealingUlcer: answers.nonHealingUlcer || false,
+        malalignedTooth: answers.malalignedTooth || false,
+        consultationNeeded: needed,
+        assessmentDate: new Date().toISOString(),
+      };
+      console.log('Saving assessment:', assessment);
+      await saveAssessment(assessment);
+      console.log('Assessment saved successfully - proceeding to summary');
+      setShowSummary(true);
+      console.log('showSummary state set to true');
+      toast({
+        title: "Assessment Complete",
+        description: needed ? "Your consultation request has been recorded." : "Thank you for completing the assessment.",
+      });
+    } catch (error) {
+      console.error('Error in handleConsultation:', error);
+      toast({
+        title: "Error",
+        description: "Failed to save assessment. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handlePrint = () => {

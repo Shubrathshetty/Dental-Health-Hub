@@ -1,6 +1,8 @@
 console.log("🔥 patientStore.ts LOADED");
 
 import emailjs from '@emailjs/browser';
+import { db } from './firebase';
+import { collection, addDoc, getDocs, updateDoc, doc, query, where } from 'firebase/firestore';
 
 /* =======================
    Interfaces
@@ -115,28 +117,49 @@ export const getPatientById = (patientId: string): Patient | null => {
    Assessment Storage
 ======================= */
 
-export const getAssessments = (): DentalAssessment[] => {
-  const data = localStorage.getItem(ASSESSMENTS_KEY);
-  return data ? JSON.parse(data) : [];
+export const getAssessments = async (): Promise<DentalAssessment[]> => {
+  try {
+    const assessmentsRef = collection(db, 'assessments');
+    const querySnapshot = await getDocs(assessmentsRef);
+    const assessments: DentalAssessment[] = [];
+    querySnapshot.forEach((doc) => {
+      assessments.push(doc.data() as DentalAssessment);
+    });
+    return assessments;
+  } catch (error) {
+    console.error('Error fetching assessments:', error);
+    return [];
+  }
 };
 
-export const saveAssessment = (
+export const saveAssessment = async (
   assessment: DentalAssessment
-): void => {
-  const assessments = getAssessments();
-  assessments.push(assessment);
-  localStorage.setItem(ASSESSMENTS_KEY, JSON.stringify(assessments));
+): Promise<void> => {
+  try {
+    console.log('🔥 saveAssessment called with:', assessment);
+    const assessmentsRef = collection(db, 'assessments');
+    const docRef = await addDoc(assessmentsRef, assessment);
+    console.log('✅ Assessment saved successfully with ID:', docRef.id);
+  } catch (error) {
+    console.error('❌ Error saving assessment:', error);
+    throw error; // Re-throw to let caller handle it
+  }
 };
 
-export const updateAssessment = (
+export const updateAssessment = async (
   patientId: string,
   updates: Partial<DentalAssessment>
-): void => {
-  const assessments = getAssessments();
-  const updatedAssessments = assessments.map(a =>
-    a.patientId === patientId ? { ...a, ...updates } : a
-  );
-  localStorage.setItem(ASSESSMENTS_KEY, JSON.stringify(updatedAssessments));
+): Promise<void> => {
+  try {
+    const assessmentsRef = collection(db, 'assessments');
+    const q = query(assessmentsRef, where('patientId', '==', patientId));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach(async (document) => {
+      await updateDoc(doc(db, 'assessments', document.id), updates);
+    });
+  } catch (error) {
+    console.error('Error updating assessment:', error);
+  }
 };
 
 /* =======================

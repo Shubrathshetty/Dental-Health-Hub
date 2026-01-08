@@ -43,20 +43,25 @@ const AdminDashboard = ({ onBack }: AdminDashboardProps) => {
   const [isScheduling, setIsScheduling] = useState(false);
 
   useEffect(() => {
-    const patientsData = getPatients().sort(
-      (a, b) =>
-        new Date(b.registrationDate).getTime() -
-        new Date(a.registrationDate).getTime()
-    );
+    const fetchData = async () => {
+      const patientsData = getPatients().sort(
+        (a, b) =>
+          new Date(b.registrationDate).getTime() -
+          new Date(a.registrationDate).getTime()
+      );
 
-    const assessmentsData = getAssessments().sort(
-      (a, b) =>
-        new Date(b.assessmentDate).getTime() -
-        new Date(a.assessmentDate).getTime()
-    );
+      const assessmentsData = await getAssessments();
+      const sortedAssessments = assessmentsData.sort(
+        (a, b) =>
+          new Date(b.assessmentDate).getTime() -
+          new Date(a.assessmentDate).getTime()
+      );
 
-    setPatients(patientsData);
-    setAssessments(assessmentsData);
+      setPatients(patientsData);
+      setAssessments(sortedAssessments);
+    };
+
+    fetchData();
   }, []);
 
   const consultationsNeeded = assessments.filter(
@@ -118,13 +123,14 @@ const AdminDashboard = ({ onBack }: AdminDashboardProps) => {
       }
 
       // Mark consultation as no longer needed after successful email
-      updateAssessment(selectedPatient.patientId, { consultationNeeded: false });
+      await updateAssessment(selectedPatient.patientId, { consultationNeeded: false });
 
       // Refresh assessments data to reflect the change
-      const updatedAssessments = getAssessments().sort((a, b) =>
+      const updatedAssessments = await getAssessments();
+      const sortedAssessments = updatedAssessments.sort((a, b) =>
         new Date(b.assessmentDate).getTime() - new Date(a.assessmentDate).getTime()
       );
-      setAssessments(updatedAssessments);
+      setAssessments(sortedAssessments);
 
       alert(
         `Consultation scheduled successfully! Consultation ID: ${consultation.consultationId}`
